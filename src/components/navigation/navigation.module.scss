@@ -1,0 +1,33 @@
+.nav {
+  background-color: var(--accent);
+  color: var(--light);
+  padding: 0px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  a {
+    padding: 15px 20px;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+
+    &:hover {
+      background-color: var(--secondary);
+    }
+  }
+
+  @media (width < 768px) {
+    a {
+      padding: 10px 8px;
+    }
+  }
+}
