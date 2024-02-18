@@ -1,7 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment } from 'react';
 import styles from './article.module.scss';
 
 library.add(faArrowRight);
@@ -29,28 +29,9 @@ export const Article = ({ data, search }) => {
   const modifyedTitle = modifyText(title, search);
   const modifyedText = modifyText(text, search);
 
-  const imgRef = useRef();
-  const [height, setHeight] = useState();
-
-  useEffect(() => {
-    const changeImgHeight = () => {
-      if (imgRef.current) setHeight(getComputedStyle(imgRef.current.nextSibling).height);
-    };
-
-    window.addEventListener('resize', changeImgHeight);
-    changeImgHeight();
-
-    return () => {
-      window.removeEventListener('resize', changeImgHeight);
-    };
-  }, [setHeight]);
-
-  if (search && modifyedTitle.length < 2 && modifyedText.length < 2) return null;
-
-
   return (
     <article className={styles.article}>
-      <img style={{ height }} ref={imgRef} className={styles.img} src={src} alt={title} />
+      <img className={styles.img} src={src} alt={title} />
       <div className={styles.text}>
         <h2>{modifyedTitle}</h2>
         <p>{modifyedText}</p>

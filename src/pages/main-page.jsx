@@ -1,6 +1,8 @@
 import { Article } from '../components/article/article';
 import { Navigation } from '../components/navigation/navigation';
 
+import styles from './main-page.module.scss';
+
 const articlesData = [
   {
     title: 'BIT-Cup 2023: там, где технологии объединяются с творчеством',
@@ -23,13 +25,23 @@ const articlesData = [
 ];
 
 export const MainPage = ({ search }) => {
+  const searchRegexp = new RegExp(`${search}`, 'gi');
+
+  const articlesFiltered = !search
+    ? articlesData
+    : articlesData.filter(({ title, text }) => searchRegexp.test(title) || searchRegexp.test(text));
+
+  const areArticlesFound = Boolean(articlesFiltered.length);
+
   return (
     <main>
       <Navigation />
       <section className='container' id='articles'>
-        {articlesData.map((data) => (
-          <Article search={search} data={data} key={data.title} />
-        ))}
+        {!areArticlesFound && (
+          <div className={styles.notFound}>По вашему запросу ничего не найдено</div>
+        )}
+        {areArticlesFound &&
+          articlesFiltered.map((data) => <Article search={search} data={data} key={data.title} />)}
         <span id='end'></span>
       </section>
     </main>
